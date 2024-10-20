@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Is Your Birthdate a Palindrome?</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .outputBox {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 10px;
+        }
+        .list-non-bullet {
+            list-style-type: none;
+            padding: 0;
+        }
+        .list-item {
+            display: inline;
+            margin: 0 10px;
+        }
+        .list-item a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .anim {
+            display: none; /* Hide the GIF initially */
+            width: 100px; /* Adjust size as needed */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">
+            Is Your Birthdate a Palindrome?
+        </h1>
+        <div class="group">
+            <label for="dob">
+                Enter Your Birthdate 
+                <span class="required">
+                    (Required)
+                </span>
+            </label>
+            <input type="date" id="dob">
+        </div>
+        <button class="btn" id="checkbtn">
+            Check
+        </button>
+        <img src="https://media.giphy.com/media/vnYhxqmTHpRDeM7lOt/giphy.gif?cid=ecf05e47k99hyrq4oby4kgdw5nzc25vqcjmrgwvovoch3xuv&ep=v1_gifs_search&rid=giphy.gif&ct=g" class="anim" alt="Loading...">
+        <div class="outputBox"></div>
+    </div>
+    <footer class="footer container-fluid">
+        <div class="footer-container">
+            <h1>
+                Get in Touch.
+            </h1>
+            <ul class="list-non-bullet p-0">
+                <li class="list-item">
+                    <a href="https://github.com/amratanshu788" target="_blank" rel="noreferrer" title="Github">
+                        GitHub
+                    </a>
+                </li>
+                <li class="list-item">
+                    <a href="https://www.linkedin.com/in/amratanshu-7908ba136/" target="_blank" rel="noreferrer" title="LinkedIn">
+                        LinkedIn
+                    </a>
+                </li>
+                
+            </ul>
+            <p>
+                Made with ❤️ by Amratanshu.
+            </p>
+        </div>
+    </footer>
+    <script src="/assets/app.js"></script>
+    <script>
+        document.getElementById('checkbtn').addEventListener('click', function() {
+            const dobInput = document.getElementById('dob').value;
+            const outputBox = document.querySelector('.outputBox');
+            const gif = document.querySelector('.anim');
+
+            if (!dobInput) {
+                outputBox.textContent = "Please enter your birthdate.";
+                return;
+            }
+
+            gif.style.display = 'block'; // Show the GIF
+            const dobDate = dobInput.replace(/-/g, '');
+            const isPalindrome = dobDate === dobDate.split('').reverse().join('');
+
+            // Calculate days left until next birthday
+            const today = new Date();
+            const birthDate = new Date(dobInput);
+            const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+
+            // If birthday already passed this year, set next birthday to next year
+            if (today > nextBirthday) {
+                nextBirthday.setFullYear(today.getFullYear() + 1);
+            }
+
+            const timeDiff = nextBirthday - today;
+            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            // Hide the GIF after the check
+            gif.style.display = 'none'; // Hide the GIF after processing
+
+            if (isPalindrome) {
+                outputBox.textContent = `🎉 Your birthdate is a palindrome! 🎂 Days left until your next birthday: ${daysLeft}`;
+            } else {
+                outputBox.textContent = `❌ Your birthdate is not a palindrome. 🎂 Days left until your next birthday: ${daysLeft}`;
+            }
+        });
+    </script>
+</body>
+</html>
